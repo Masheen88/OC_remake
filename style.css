@@ -1,0 +1,51 @@
+.dark-mode {
+  background-color: #2a2a43;
+  color: #ffffff;
+}
+
+/* text area dark mode */
+.dark-mode textarea {
+  background-color: #2a2a43;
+  color: #ffffff;
+}
+
+/* text area code box formatting */
+textarea#codeOutput,
+textarea#consoleOutput {
+  width: 100%;
+  min-height: 200px;
+}
+
+/* resultsOutput */
+#resultsOutput {
+  border: 1px solid;
+  width: 100%;
+  min-height: 200px;
+}
+
+#consoleOutput {
+  border: 1px solid;
+  width: 100%;
+  min-height: 200px;
+}
+
+/* grid container 2 cells */
+.grid-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 10px;
+  text-align: center;
+  padding: 10px;
+}
+
+.grid-container2 {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 10px;
+  text-align: center;
+  padding: 10px;
+}
+
+.resultsContainer {
+  text-align: center;
+}

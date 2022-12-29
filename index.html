@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- onpage load run a function to display the questions and expected outputs -->
+    <!-- Div to display the questions and expected outputs -->
+    <div id="question"></div>
+    <div id="levelSelect">
+      <select id="levelSelectMenu" onchange="levelSelection()">
+        <option value="default">Select a level</option>
+      </select>
+    </div>
+    <div id="testCaseMenu">
+      <select id="testCaseSelect"></select>
+    </div>
+    <div id="expectedOutputs"></div>
+    <!-- Textarea for user to enter JavaScript code -->
+    <!-- grid container with 2 cells -->
+    <div class="grid-container">
+      <div class="grid-item">
+        <h4>Your Code:</h4>
+        <textarea id="codeOutput"></textarea>
+      </div>
+      <div class="grid-item">
+        <h4>Console Log:</h4>
+        <textarea id="consoleOutput" rows="10" cols="50"></textarea>
+      </div>
+    </div>
+
+    <div class="grid-container2">
+      <div class="grid-item">
+        <div id="resultsContainer">
+          <h4>Results:</h4>
+          <div id="resultsOutput"></div>
+      </div>
+     
+    </div>
+
+
+    <br />
+    <div>
+      <button id="runTests">Run Tests</button>
+      <button id="resetTests">Reset</button>
+    </div>
+
+    <!-- Div to display the results of the test cases -->
+
+    <!-- Div to display the console log output -->
+
+    <script src="./testing.js"></script>
+  </body>
+</html>
