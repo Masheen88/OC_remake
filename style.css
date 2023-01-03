@@ -10,7 +10,7 @@
 }
 
 /* text area code box formatting */
-textarea#codeOutput,
+textarea#codeInput,
 textarea#consoleOutput {
   width: 100%;
   min-height: 200px;

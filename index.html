@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- onpage load run a function to display the questions and expected outputs -->
+
     <!-- Div to display the questions and expected outputs -->
     <div id="question"></div>
     <div id="levelSelect">
-      <select id="levelSelectMenu" onchange="levelSelection()">
+      <select id="levelSelectMenu">
         <option value="default">Select a level</option>
       </select>
     </div>
@@ -25,7 +25,7 @@
     <div class="grid-container">
       <div class="grid-item">
         <h4>Your Code:</h4>
-        <textarea id="codeOutput"></textarea>
+        <textarea id="codeInput"></textarea>
       </div>
       <div class="grid-item">
         <h4>Console Log:</h4>
