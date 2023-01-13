@@ -8,50 +8,90 @@ if (
   document.body.classList.remove("dark-mode");
 }
 
-// lab class app begins here
+// App begins here.
 
 //NOTE: test cases for lab
 const testCases = [
   {
-    level: "Level 1",
-    name: "Test Case 1",
+    level: "Week 2",
+    name: "Test 1",
     question:
       "Write a function called `add` that takes two numbers as arguments and returns their sum.",
-    code: "console.log(add(1, 2))",
+    code: "add(1, 2)",
+    codeValue: `
+    //You can include comments // and console logs in your code!
+    //Write your function below this line.
+    
+    `,
     expectedOutput: 3,
   },
   {
-    level: "Level 1",
-    name: "Test Case 2",
+    level: "Week 2",
+    name: "Test 2",
     question:
-      "Write a function called `add2` that takes two numbers as arguments and returns their sum.",
-    code: "console.log(add(5, 10))",
-    expectedOutput: "15",
+      "Write a function called `subtract` that takes two numbers a, b as arguments and subtracts b from a.",
+    code: "add(5, 10)",
+    expectedOutput: 15,
   },
   {
-    level: "Level 2",
-    name: "Test Case 1",
+    level: "Week 3",
+    name: "Test 1",
     question:
-      "Write a function called `subtract` that takes two numbers as arguments and returns their sum.",
-    code: "console.log(subtract(5, 10))",
-    expectedOutput: "15",
+      "Our ferris wheel broke down! Fix the for loop so that it returns the correct value to let the passengers off the ride.",
+    code: "ferrisWheel(10, 5)",
+    codeValue: `
+    //You can include comments // and console logs in your code!
+    \n//Write your function below this line.
+    
+function ferrisWheel(totalSeats, passengers) {
+console.log("totalSeats:", totalSeats, "passengers:", passengers)
+
+    //seats lefts
+    let seatsLeft = totalSeats - passengers;
+
+    for (let i = 0; i < passengers; i++) {
+      console.log("passenger", i, "seats left:", seatsLeft);
+      seatsLeft--;
+
+      if (seatsLeft < 0) {
+        console.log("Not enough seats!");
+        //return seatsLeft;
+      } else if (seatsLeft === 0) {
+        console.log("All seats are full!");
+        return  seatsLeft;
+      } else {
+        console.log("There are " + seatsLeft + " seats left.");
+        return  seatsLeft;
+      }
+    
+  }
+    `,
+    expectedOutput: 0,
   },
   {
-    level: "Level 3",
-    name: "Test Case 1",
+    level: "Week 4",
+    name: "Test 1",
     question:
       "Write a function called `multiply` that takes two numbers as arguments and returns their sum.",
-    code: "console.log(multiply(100, 200))",
-    expectedOutput: "300",
+    code: "multiply(100, 200)",
+    expectedOutput: 20000,
   },
   // Add more test cases here
   {
-    level: "Level 4",
-    name: "Test Case 1",
+    level: "Week 5",
+    name: "Test 1",
     question:
-      "Write a function called `divide` that takes two numbers as arguments and returns their sum.",
-    code: "console.log(divide(1000, 2000))",
-    expectedOutput: "3000",
+      "Write a function called `hungry` that takes an argument and returns true if the number is greater than 10.",
+    code: "hungry(5)",
+    expectedOutput: false,
+  },
+  {
+    level: "Week 6",
+    name: "Test 1",
+    question:
+      "Write a function called `hungry` that takes an argument and returns true if the number is greater than 10.",
+    code: "hungry(11)",
+    expectedOutput: true,
   },
 ];
 
@@ -66,8 +106,10 @@ let runTestsButton = document.getElementById("runTests");
 let resetButton = document.getElementById("resetTests");
 
 //Outputs
+let questionOutput = document.getElementById("question");
+let expectedQuestionOutput = document.getElementById("expectedOutput");
 let code = document.getElementById("codeInput");
-let consoleOutput = document.getElementById("consoleOutput"); //Console Log:
+
 let resultsOutput = document.getElementById("resultsOutput"); // Results:
 
 //creates the level selection menu
@@ -98,38 +140,91 @@ function createMenu() {
         let option = document.createElement("option");
         option.text = testCases[i].name;
         option.value = i;
+        // console.log("option:", option);
         testCaseSelect.add(option);
+        // console.log("in for loop testCaseSelect:", testCaseSelect);
       }
     }
   });
 }
 createMenu();
 
+//on level select change, update the question and code
+levelSelectMenu.addEventListener("change", function () {
+  questionOutput.innerHTML = "";
+  //Gets the selected test case
+  let selectedTestCase = testCaseSelect.value;
+  // console.log("selectedTestCase", selectedTestCase);
+  let selectedTest = testCases[selectedTestCase];
+  // console.log("selectedTest", selectedTest);
+
+  questionOutput.innerHTML = selectedTest.question;
+  //on change of the selected test case, update the question and code
+  testCaseSelect.addEventListener("change", function () {
+    //Gets the selected test case
+    questionOutput.innerHTML = "";
+    let selectedTestCase = testCaseSelect.value;
+    // console.log("selectedTestCase", selectedTestCase);
+    let selectedTest = testCases[selectedTestCase];
+    // console.log("onChange selectedTest", selectedTest);
+
+    questionOutput.innerHTML = selectedTest.question;
+  });
+
+  //Updates the questionOutput element with the question from the selected test case
+
+  //Updates the code element with the code from the selected test case
+  code.value = selectedTest.codeValue;
+
+  //Updates the expected output element with the expected output from the selected test case
+  expectedQuestionOutput.innerHTML = `Expected Answer: ${selectedTest.expectedOutput}`;
+});
+
+//Checks the code provided by the user against the test case code
 function checkCode() {
   // Gets the selected test case
   let selectedTestCase = testCaseSelect.value;
-
-  // NOTE: Selected test case object from the testCases array
   let selectedTest = testCases[selectedTestCase];
 
   // Get the expected output of the selected test case
   let expectedOutput = selectedTest.expectedOutput;
 
-  // Get the code provided by the user
+  // Code provided by the user
   let codeOutput = code.value;
 
-  // Evaluate the code
-  let actualOutput = eval(codeOutput);
+  // Code provided by the test case
+  let testCode = selectedTest.code;
 
-  // Check if the function provided by the user returns the expected output
-  if (actualOutput === expectedOutput) {
+  let userFunctions = {};
+
+  // Get the function name from the test case code
+  let functionName = testCode.match(/\w+(?=\()/)[0];
+
+  // Get the function arguments from the test case code
+  let functionArgs = testCode.match(/\(([^)]+)\)/)[1].split(",");
+
+  try {
+    eval(`userFunctions.${functionName} = ${codeOutput}`);
+
+    // Convert the argument values from string to number
+    functionArgs = functionArgs.map((arg) => parseInt(arg));
+
+    // Call the function with the arguments
+    let actual = userFunctions[functionName](...functionArgs);
+    // console.log("actual", actual);
+
+    // Check if the function provided by the user returns the expected output
+    if (expectedOutput === actual) {
+      // Update the resultsOutput element with the expected output
+      resultsOutput.innerHTML = `<div>True:</div><p>Expected Output: ${expectedOutput}</p><p>Actual Output: ${actual}</p>`;
+    } else {
+      // Update the resultsOutput element with the expected output and the actual output
+      resultsOutput.innerHTML = `<div>False:</div><p>Expected Output: ${expectedOutput}</p><p>Actual Output: ${actual}</p>`;
+    }
+  } catch (error) {
     // Update the resultsOutput element with the expected output and the actual output
-    resultsOutput.innerHTML = `<p>Expected Output: ${expectedOutput}</p><p>Actual Output: ${actualOutput}</p>`;
-  } else {
-    // Update the resultsOutput element with the expected output and the actual output
-    resultsOutput.innerHTML = `<p>Expected Output: ${expectedOutput}</p><p>Actual Output: ${actualOutput}</p>`;
+    resultsOutput.innerHTML = `<div>False:</div><p>Expected Output: ${expectedOutput}</p><p>Actual Output: ${error}</p>`;
   }
 }
 
-// Add an event listener to the runTests button to run the checkCode function when the button is clicked
 runTestsButton.addEventListener("click", checkCode);
